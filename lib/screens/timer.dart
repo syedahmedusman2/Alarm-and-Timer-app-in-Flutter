@@ -84,6 +84,9 @@ void stop(){
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        // ElevatedButton(onPressed: (){
+        //   Timer(Duration(seconds: 3), ()=>FlutterRingtonePlayer.stop());
+        // }, child: Text("child")),
         SizedBox(height: 20,),
         Expanded(flex: 6,
         child: Row(

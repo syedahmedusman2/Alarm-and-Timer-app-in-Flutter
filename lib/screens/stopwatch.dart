@@ -1,3 +1,101 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+
+class StopWatch extends StatefulWidget {
+  const StopWatch({ Key? key }) : super(key: key);
+
+  @override
+  _StopWatchState createState() => _StopWatchState();
+}
+
+class _StopWatchState extends State<StopWatch> {
+  String time = "00:00:00";
+  bool startispressed = true;
+  bool stopispressed = true;
+  bool resetispressed = true;
+  var swatch = Stopwatch();
+  final dur = const Duration(seconds: 1);
+  void startstopwatch(){
+    setState(() {
+      stopispressed =  false;
+      startispressed = false;
+    });
+    swatch.start(); 
+    starttimer();
+
+  }
+  void keeprunning(){
+
+if(swatch.isRunning){
+  starttimer();
+}
+setState(() {
+  time = swatch.elapsed.inHours.toString().padLeft(2, "0") + 
+  ":" + (swatch.elapsed.inMinutes%60).toString().padLeft(2, "0") + ":"+
+  (swatch.elapsed.inSeconds%60).toString().padLeft(2, "0");
+});
+  }
+
+  void starttimer(){
+    Timer(dur, keeprunning);
+  }
+
+  void stopstopwatch(){
+    setState(() {
+      stopispressed = true;
+      startispressed = true;
+      resetispressed = false;
+      
+    });
+    swatch.stop();
+    
+  }
+
+  void resetstopwatch(){
+  setState(() {
+    resetispressed = true;
+    startispressed = true;
+  time = "00:00:00";
+  });
+  swatch.reset();
+    
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment:  MainAxisAlignment.center,
+      children: [
+        Text(time, style: TextStyle(
+          fontSize: 24, fontWeight: FontWeight.w700
+        ),
+        ),
+        SizedBox(height: 30,),
+        Row(mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+           RaisedButton.icon(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),color: Colors.red,onPressed: stopispressed?null:stopstopwatch, icon: Icon(Icons.stop_circle_rounded), label: Text("Stop", style: TextStyle(color: Colors.white, fontSize: 12),)),
+          
+          Column(
+            children: [
+              SizedBox(height: 70,),
+          RaisedButton.icon(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),color: Colors.green,onPressed:startispressed ? startstopwatch: null , icon: Icon(Icons.play_arrow_rounded), label: Text("Start", style: TextStyle(color: Colors.white, fontSize: 12),)),
+            ],
+          ),
+               RaisedButton.icon(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),color: Colors.blue,onPressed:resetispressed ? null : resetstopwatch, icon: Icon(Icons.restore), label: Text("Reset", style: TextStyle(color: Colors.white, fontSize: 12),))
+        ],)
+      ],
+      
+    );
+  }
+}
+
+
+
+
+
+
+
+
 // import 'package:flutter/material.dart';
 
 // class HomePageWidget extends StatefulWidget {
@@ -166,3 +264,5 @@
 //     );
 //   }
 // }
+
+

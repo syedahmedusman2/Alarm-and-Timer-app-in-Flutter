@@ -1,4 +1,5 @@
 import 'package:alarmapp2/screens/alarm.dart';
+import 'package:alarmapp2/screens/stopwatch.dart';
 import 'package:alarmapp2/screens/timer.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +37,7 @@ class _HomapageState extends State<Homapage> with TickerProviderStateMixin {
        body: TabBarView(children: [
         Alarm(),
         timer(),
-         Text("StopWatch")
+        StopWatch()
        ]),
        
      ));
