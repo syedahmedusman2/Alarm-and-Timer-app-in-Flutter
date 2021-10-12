@@ -1,10 +1,33 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.alarmapp2">
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+<uses-permission android:name="android.permission.WAKE_LOCK"/>
    <application
         android:label="alarmapp2"
         android:icon="@mipmap/ic_launcher">
         <service android:name="dev.cruv.ringtone_player.PlayerService" />
+        <service
+    android:name="dev.fluttercommunity.plus.androidalarmmanager.AlarmService"
+    android:permission="android.permission.BIND_JOB_SERVICE"
+    android:exported="false"/>
+
+
+Check out our documentation website to learn more. [Plus plugins documentation](https://plus.fluttercommunity.dev/docs/overview)
+<service
+    android:name="io.flutter.plugins.androidalarmmanager.AlarmService"
+    android:permission="android.permission.BIND_JOB_SERVICE"
+    android:exported="false"/>
+<receiver
+    android:name="io.flutter.plugins.androidalarmmanager.AlarmBroadcastReceiver"
+    android:exported="false"/>
+<receiver
+    android:name="io.flutter.plugins.androidalarmmanager.RebootBroadcastReceiver"
+    android:enabled="false">
+    <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+    </intent-filter>
+</receiver>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -31,6 +31,9 @@ dependencies:
   numberpicker: 
   # ringtone_player: ^0.1.1
   flutter_ringtone_player: ^3.0.0
+  android_alarm_manager: ^2.0.2
+  shared_preferences:
+  
 
 dev_dependencies:
   flutter_test:
