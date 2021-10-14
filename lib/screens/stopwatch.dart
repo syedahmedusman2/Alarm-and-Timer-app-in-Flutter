@@ -34,6 +34,7 @@ setState(() {
   time = swatch.elapsed.inHours.toString().padLeft(2, "0") + 
   ":" + (swatch.elapsed.inMinutes%60).toString().padLeft(2, "0") + ":"+
   (swatch.elapsed.inSeconds%60).toString().padLeft(2, "0");
+ 
 });
   }
 
@@ -64,13 +65,18 @@ setState(() {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment:  MainAxisAlignment.center,
+      mainAxisAlignment:  MainAxisAlignment.start,
       children: [
+        
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 34, 0, 30),
+          child: Image(image: NetworkImage('https://pngimg.com/uploads/stopwatch/stopwatch_PNG140.png'), height: 150,),
+        ),
         Text(time, style: TextStyle(
           fontSize: 24, fontWeight: FontWeight.w700
         ),
         ),
-        SizedBox(height: 30,),
+        SizedBox(height: 20,),
         Row(mainAxisAlignment: MainAxisAlignment.center,
           children: [
            RaisedButton.icon(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),color: Colors.red,onPressed: stopispressed?null:stopstopwatch, icon: Icon(Icons.stop_circle_rounded), label: Text("Stop", style: TextStyle(color: Colors.white, fontSize: 12),)),

@@ -75,6 +75,7 @@ void stop(){
     started = true;
     stopped = true;
     checktimer = false;
+    FlutterRingtonePlayer.stop();
   });
 
 }
@@ -82,8 +83,10 @@ void stop(){
   Widget build(BuildContext context) {
     return Container(
     child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        SizedBox(height: 20,),
+        Image(image: NetworkImage('https://pngimg.com/uploads/stopwatch/stopwatch_PNG140.png'),height: 150,),
         // ElevatedButton(onPressed: (){
         //   Timer(Duration(seconds: 3), ()=>FlutterRingtonePlayer.stop());
         // }, child: Text("child")),
