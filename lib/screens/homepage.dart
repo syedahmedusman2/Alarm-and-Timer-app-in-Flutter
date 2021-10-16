@@ -23,7 +23,7 @@ class _HomapageState extends State<Homapage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return DefaultTabController(length: 3,initialIndex: 0,
      child: Scaffold(
-       appBar: AppBar(centerTitle: true,title: Text("Clock"),
+       appBar: AppBar(centerTitle: true,title: Text("Al Clock"),automaticallyImplyLeading: false,
        bottom: TabBar(tabs: 
        [
          Tab(text: "Alarm"),

@@ -86,9 +86,9 @@ void stop(){
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(height: 20,),
-        Image(image: NetworkImage('https://pngimg.com/uploads/stopwatch/stopwatch_PNG140.png'),height: 150,),
+        Image(image: NetworkImage('https://media.giphy.com/media/lTjXSsPmX3Jdx4J7DU/giphy.gif'),height: 150,),
         // ElevatedButton(onPressed: (){
-        //   Timer(Duration(seconds: 3), ()=>FlutterRingtonePlayer.stop());
+        //   Timer(Duration(seconds: 3), ()=>FlutterR'https://pngimg.com/uploads/stopwatch/stopwatch_PNG140.png'ingtonePlayer.stop());
         // }, child: Text("child")),
         SizedBox(height: 20,),
         Expanded(flex: 6,

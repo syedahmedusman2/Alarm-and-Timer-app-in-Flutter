@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:alarmapp2/screens/alarm2.dart';
 import 'package:alarmapp2/screens/homepage.dart';
+import 'package:alarmapp2/screens/splashScreen.dart';
 import 'package:android_alarm_manager/android_alarm_manager.dart';
 
 import 'package:flutter/material.dart';
@@ -46,7 +47,8 @@ class MyApp extends StatelessWidget {
         
         primarySwatch: Colors.blue,
       ),
-      home: Homapage(),
+      home:SplashScreen() 
+      //  Homapage(),
     );
   }
 }

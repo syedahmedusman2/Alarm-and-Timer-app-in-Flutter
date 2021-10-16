@@ -3,6 +3,7 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:alarmapp2/main.dart';
 import 'package:android_alarm_manager/android_alarm_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
@@ -91,6 +92,22 @@ class _AlarmHomePageState extends State<_AlarmHomePage> {
     uiSendPort?.send(null);
   }
   final StreamController<bool> streamController = StreamController<bool>.broadcast();
+   stopTheSound() async {
+    await AndroidAlarmManager.oneShot(Duration(seconds: 0), 4, stop,
+        exact: true, wakeup: true, alarmClock: true, allowWhileIdle: true);
+  }
+  stop(){
+     FlutterRingtonePlayer.stop();
+  }
+  // static stopSound() async {
+  //   if (MyApp.isPlaying) {
+  //     var res = await audioPlugin.stop();
+  //     if (res == 1) {
+  //       MyApp.isPlaying = false;
+  //     }
+  //   }
+  // }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -99,147 +116,159 @@ class _AlarmHomePageState extends State<_AlarmHomePage> {
       stream: null,
       builder: (context, snapshot) {
         return Scaffold(
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(bottom: 10),
-                              child: Text(
-                                "HH",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            NumberPicker(
-                              zeroPad: true,
-                                itemWidth: 50,
-                                minValue: 0,
-                                maxValue: 23,
-                                value: hours,
-                                onChanged: (val) {
-                                 
-                                  setState(() {
-                                    hours = val;
-                                  });
-                                }),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(bottom: 10),
-                              child: Text(
-                                "MM",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            NumberPicker(
-                              zeroPad: true,
-                                itemWidth: 50,
-                                minValue: 0,
-                                maxValue: 60,
-                                value: mins,
-                                onChanged: (val) {
-                                  setState(() {
-                                    mins = val;
-                                  // prefs.setInt('min', val);
-                                  });
-                                }),
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-    
-               
-                // RaisedButton(onPressed: (){}, child: Text("Set Alarm")),
-                OutlinedButton(
-                  onPressed: () async{
-                    setState(() {
-                      hourforalarm = hours;
-                      minforalarm = mins;
-                      secforalarm = sec;
-                      
-                      
-                      // prefs.setString(key, value)
-                    });
-                    prefs.setInt('hour', hourforalarm);
-                     prefs.setInt('min', minforalarm);
-                    // await AndroidAlarmManager.oneShotAt(
-                      
-                    //     DateTime(DateTime.now().year, DateTime.now().month,
-                    //         DateTime.now().day,prefs.getInt('hour')!.toInt(), prefs.getInt('min')!.toInt() ),
-                    //     420,
-                    //     callback, wakeup: true, alarmClock: true);
-                    final snackbar = SnackBar(content: Text("Alarm set for ${prefs.getInt('hour')}: ${prefs.getInt('min')}"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                  },
-                  child: Text("Set Alarm"),
-                ),
-                // CupertinoButton.filled(child: Text("Stop"), onPressed: (){FlutterRingtonePlayer.stop();}),
-                CupertinoButton(
-                    child: Text("Test"),
-                    onPressed: () {
-                      print(prefs.getInt('hour')!.toInt());
-                      print(prefs.getInt('min')!.toInt());
-                      // print("${hourforalarm} : ${minforalarm} : ${secforalarm}");
-                    }),
-                Text(
-                  'Alarm fired $_counter times',
-                  style: textStyle,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Total alarms fired: ',
-                      style: textStyle,
-                    ),
-                    Text(
-                      prefs.getInt(countKey).toString(),
-                      key: ValueKey('BackgroundCountText'),
-                      style: textStyle,
-                    ),
-                  ],
-                ),
-                ElevatedButton(
-                  child: Text(
-                    'Schedule OneShot Alarm',
+          body: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 6, 0, 4),
+                    child: Image(image: NetworkImage('https://media.giphy.com/media/lTjXSsPmX3Jdx4J7DU/giphy.gif'),height: 150,),
                   ),
-                  key: ValueKey('RegisterOneShotAlarm'),
-                  onPressed: () async {
-                    // await AndroidAlarmManager.oneShot(
-                    //   const Duration(seconds: 5),
-                    //   // Ensure we have a unique alarm ID.
-                    //   Random().nextInt(pow(2, 31).toInt()),
-                    //   callback,
-                    //   exact: true,
-                    //   wakeup: true,
-                    // );
-                    await AndroidAlarmManager.oneShotAt(
-                        DateTime(DateTime.now().year, DateTime.now().month,
-                            DateTime.now().day, prefs.getInt('hour')!.toInt(),
-                             prefs.getInt('min')!.toInt()),
-                        420,
-                        callback);
-                  },
-                ),
-              ],
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "HH",
+                                  style: TextStyle(
+                                      fontSize: 18, fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              NumberPicker(
+                                zeroPad: true,
+                                  itemWidth: 50,
+                                  minValue: 0,
+                                  maxValue: 23,
+                                  value: hours,
+                                  onChanged: (val) {
+                                   
+                                    setState(() {
+                                      hours = val;
+                                    });
+                                  }),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "MM",
+                                  style: TextStyle(
+                                      fontSize: 18, fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              NumberPicker(
+                                zeroPad: true,
+                                  itemWidth: 50,
+                                  minValue: 0,
+                                  maxValue: 60,
+                                  value: mins,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      mins = val;
+                                    // prefs.setInt('min', val);
+                                    });
+                                  }),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+              
+                 
+                  // RaisedButton(onPressed: (){}, child: Text("Set Alarm")),
+                  OutlinedButton(
+                    onPressed: () async{
+                      setState(() {
+                        hourforalarm = hours;
+                        minforalarm = mins;
+                        secforalarm = sec;
+                        
+                        
+                        // prefs.setString(key, value)
+                      });
+                      prefs.setInt('hour', hourforalarm);
+                       prefs.setInt('min', minforalarm);
+                      // await AndroidAlarmManager.oneShotAt(
+                        
+                      //     DateTime(DateTime.now().year, DateTime.now().month,
+                      //         DateTime.now().day,prefs.getInt('hour')!.toInt(), prefs.getInt('min')!.toInt() ),
+                      //     420,
+                      //     callback, wakeup: true, alarmClock: true);
+                      final snackbar = SnackBar(content: Text("Alarm set for ${prefs.getInt('hour')}: ${prefs.getInt('min')}"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                    },
+                    child: Text("Set Alarm"),
+                  ),
+                  CloseButton(onPressed: (){stopTheSound();},),
+                  // CupertinoButton.filled(child: Text("Stop"), onPressed: (){FlutterRingtonePlayer.stop();}),
+                  // CupertinoButton(
+                  //     child: Text("Test"),
+                  //     onPressed: () {
+                  //       print(prefs.getInt('hour')!.toInt());
+                  //       print(prefs.getInt('min')!.toInt());
+                  //       // print("${hourforalarm} : ${minforalarm} : ${secforalarm}");
+                  //     }),
+                  // Text(
+                  //   'Alarm fired $_counter times',
+                  //   style: textStyle,
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: <Widget>[
+                  //     Text(
+                  //       'Total alarms fired: ',
+                  //       style: textStyle,
+                  //     ),
+                  //     Text(
+                  //       prefs.getInt(countKey).toString(),
+                  //       key: ValueKey('BackgroundCountText'),
+                  //       style: textStyle,
+                  //     ),
+                  //   ],
+                  // ),
+                  OutlineButton(
+                    child: Text(
+                      'Schedule Alarm',
+                      style: TextStyle(color: Colors.blueAccent)
+                    ),
+                    key: ValueKey('RegisterOneShotAlarm'),
+                    onPressed: () async {
+                      // await AndroidAlarmManager.oneShot(
+                      //   const Duration(seconds: 5),
+                      //   // Ensure we have a unique alarm ID.
+                      //   Random().nextInt(pow(2, 31).toInt()),
+                      //   callback,
+                      //   exact: true,
+                      //   wakeup: true,
+                      // );
+                      await AndroidAlarmManager.oneShotAt(
+                          DateTime(DateTime.now().year, DateTime.now().month,
+                              DateTime.now().day, prefs.getInt('hour')!.toInt(),
+                               prefs.getInt('min')!.toInt()),
+                          420,
+                          callback);
+                    },
+                  ),
+                  CloseButton(onPressed: (){
+                    FlutterRingtonePlayer.stop();
+                    
+                  },)
+                ],
+              ),
             ),
           ),
         );

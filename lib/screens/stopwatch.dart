@@ -70,7 +70,7 @@ setState(() {
         
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 34, 0, 30),
-          child: Image(image: NetworkImage('https://pngimg.com/uploads/stopwatch/stopwatch_PNG140.png'), height: 150,),
+          child: Image(image: NetworkImage('https://media.giphy.com/media/lTjXSsPmX3Jdx4J7DU/giphy.gif'), height: 150,),
         ),
         Text(time, style: TextStyle(
           fontSize: 24, fontWeight: FontWeight.w700
