@@ -4,12 +4,15 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:alarmapp2/main.dart';
+import 'package:alarmapp2/screens/timer.dart';
 import 'package:android_alarm_manager/android_alarm_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
+
+// late var String abc;
 
 /// The [SharedPreferences] key to access the alarm fire count.
 const String countKey = 'count';
@@ -213,7 +216,7 @@ class _AlarmHomePageState extends State<_AlarmHomePage> {
                     },
                     child: Text("Set Alarm"),
                   ),
-                  CloseButton(onPressed: (){stopTheSound();},),
+                  // CloseButton(onPressed: (){stopTheSound();},),
                   // CupertinoButton.filled(child: Text("Stop"), onPressed: (){FlutterRingtonePlayer.stop();}),
                   // CupertinoButton(
                   //     child: Text("Test"),
@@ -245,6 +248,7 @@ class _AlarmHomePageState extends State<_AlarmHomePage> {
                       'Schedule Alarm',
                       style: TextStyle(color: Colors.blueAccent)
                     ),
+                    
                     key: ValueKey('RegisterOneShotAlarm'),
                     onPressed: () async {
                       // await AndroidAlarmManager.oneShot(
@@ -263,7 +267,8 @@ class _AlarmHomePageState extends State<_AlarmHomePage> {
                           callback);
                     },
                   ),
-                  CloseButton(onPressed: (){
+                //  GestureDetector(onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (_)=>timer()));},child: Icon(Icons.more),),
+                  CloseButton(color: Colors.red,onPressed: (){
                     FlutterRingtonePlayer.stop();
                     
                   },)
@@ -346,6 +351,7 @@ class _AlarmHomePageState extends State<_AlarmHomePage> {
 //                             fontSize: 18, fontWeight: FontWeight.w700),
 //                       ),
 //                     ),
+
 //                     NumberPicker(
 //                         itemWidth: 50,
 //                         minValue: 0,
